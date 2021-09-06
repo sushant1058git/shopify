@@ -84,7 +84,7 @@ AUTH_USER_MODEL = 'accounts.Account'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'django_shopify',
+        'NAME':'shopify',
         'USER': 'root',
         'PASSWORD':'root',
         'HOST':'localhost',
