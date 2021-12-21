@@ -11,6 +11,8 @@ from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from cart.views import _get_cart_id
+from cart.models import Cart,CartItem
 
 
 def register(request):
@@ -59,9 +61,21 @@ def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
+
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
+            try:
+                cart = Cart.objects.get(cart_id=_get_cart_id(request))
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists
+                if is_cart_item_exists:
+                    cart_item = CartItem.objects.filter(cart=cart)
+                for item in cart_item:
+                    item.user = user
+                    item.save()
+
+            except:
+                pass
             auth.login(request, user)
             messages.success(request, 'You are Logged in !!')
             return redirect('dashboard')

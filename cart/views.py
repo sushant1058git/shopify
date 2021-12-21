@@ -3,6 +3,7 @@ from store.models import Product, Variation
 from .models import Cart, CartItem
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 def _get_cart_id(request):  # getting cartId
@@ -130,3 +131,29 @@ def cart(request, total=0, quantity=0, cart_item=None):
 
     }
     return render(request, 'store/cart.html', context)
+
+@login_required(login_url='login')
+def checkout(request, total=0, quantity=0, cart_item=None):
+    try:
+        tax = 0
+        grand_total = 0
+        cart = Cart.objects.get(cart_id=_get_cart_id(request))
+        cart_item = CartItem.objects.filter(cart=cart, is_active=True)
+        for item in cart_item:
+            total += (item.product.price * item.quantity)
+            quantity += item.quantity
+        tax = (.02 * total)
+        grand_total = total + tax
+
+    except ObjectDoesNotExist:
+        pass
+
+    context = {
+        'total': total,
+        'cart_item': cart_item,
+        'quantity': quantity,
+        'grand_total': grand_total,
+        'tax': tax
+
+    }
+    return render(request, 'store/checkout.html', context)
