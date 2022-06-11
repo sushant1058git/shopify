@@ -18,7 +18,8 @@ class MyAccountManager(BaseUserManager):
         )
 
         user.set_password(password)
-        user.save(using=self._db)
+        user.save(using=self._db)#This is used in case you have multiple databases by which
+        #you define which database you need to use for operation.
         return user
 
     def create_superuser(self, first_name, last_name, username, email, password):
