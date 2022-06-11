@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import redirect, render,get_object_or_404
 from .models import Product
 from category.models import Category
 from cart.models import Cart,CartItem
@@ -50,9 +50,11 @@ def product_details(request, category_slug, product_slug):
 def search(request):
     if 'keyword' in request.GET:
         keyword = request.GET['keyword']
-        if keyword:
+        if keyword != '':
             products = Product.objects.filter(Q(product_name__icontains = keyword) | Q(product_description__icontains=keyword))
             product_count = products.count()
+        else:
+            return redirect('home')
         context={
             'products': products,
             'product_count':product_count

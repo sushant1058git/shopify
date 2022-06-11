@@ -10,7 +10,7 @@ class AccountAdmin(UserAdmin):
     ordering = ('-date_joined',)
     filter_horizontal = ()
     list_filter = ()
-    fieldsets = ()
+    fieldsets = () #make password readonly in admin panel
 
 
 admin.site.register(Account,AccountAdmin)
