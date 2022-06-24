@@ -64,7 +64,7 @@ body {
   margin: 0;
   font-family: "Inter", Arial, "Helvetica Neue", "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.5;
   color: #343a40;
   text-align: left;
@@ -161,7 +161,7 @@ sup {
 }
 
 a {
-  color: #ffd712;
+  color: black;
   text-decoration: none;
   background-color: transparent;
 }
@@ -2346,8 +2346,8 @@ textarea.form-control {
 
 .btn {
   display: inline-block;
-  font-weight: 500;
-  color: #343a40;
+  font-weight: 300;
+  color: black;
   text-align: center;
   vertical-align: middle;
   -webkit-user-select: none;
@@ -2368,7 +2368,6 @@ textarea.form-control {
   }
 }
 .btn:hover {
-  color: #343a40;
   text-decoration: none;
 }
 .btn:focus, .btn.focus {
@@ -2385,17 +2384,17 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary {
-  color: #fff;
+  color: rgb(0, 0, 0);
   background-color: #ffd712;
   border-color: #ffd712;
 }
 .btn-primary:hover {
-  color: #fff;
-  background-color: #1650e0;
-  border-color: #154cd4;
+  color: black;
+  background-color: #ffd712;
+  border-color: #ffd712;
 }
 .btn-primary:focus, .btn-primary.focus {
-  box-shadow: 0 0 0 0.2rem rgba(80, 126, 238, 0.5);
+  box-shadow: 0 0 0 0.2rem hwb(50 6% 34%);
 }
 .btn-primary.disabled, .btn-primary:disabled {
   color: #fff;
@@ -2403,12 +2402,11 @@ fieldset:disabled a.btn {
   border-color: #ffd712;
 }
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
-  color: #fff;
-  background-color: #154cd4;
-  border-color: #1348c9;
+  background-color: #ffd712;
+  border-color: #ffd712;
 }
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-primary.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(80, 126, 238, 0.5);
+  box-shadow: 0 0 0 0.2rem #ffd712;
 }
 
 .btn-secondary {
@@ -4594,6 +4592,7 @@ input[type=button].btn-block {
   padding-left: 0;
   list-style: none;
   border-radius: 0.37rem;
+
 }
 
 .page-link {
@@ -4602,13 +4601,13 @@ input[type=button].btn-block {
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: #ffd712;
+  color: #545454;
   background-color: #fff;
   border: 1px solid #dee2e6;
 }
 .page-link:hover {
   z-index: 2;
-  color: #1244bd;
+  color: #545454;
   text-decoration: none;
   background-color: #e4e4e4;
   border-color: #dee2e6;
@@ -4630,7 +4629,7 @@ input[type=button].btn-block {
 }
 .page-item.active .page-link {
   z-index: 1;
-  color: #fff;
+  color: #545454;
   background-color: #ffd712;
   border-color: #ffd712;
 }

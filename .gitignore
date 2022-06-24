@@ -152,3 +152,5 @@ cython_debug/
 
 **/migrations/**
 .DS_Store
+local.env
+.env

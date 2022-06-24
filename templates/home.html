@@ -5,41 +5,38 @@
 
 <!-- ========================= SECTION MAIN ========================= -->
 <section class="section-intro padding-y-sm">
-<div class="container">
 
 <div class="intro-banner-wrap">
-	<img src="{% static 'images/banners/cover2.jpg'%}" class="img-fluid rounded">
+	<img src="{% static 'images/banners/design.jpg'%}" class="img-fluid rounded" height="800">
 </div>
 
-</div> <!-- container //  -->
 </section>
 <!-- ========================= SECTION MAIN END// ========================= -->
 
 <!-- ========================= SECTION  ========================= -->
 <section class="section-name padding-y-sm">
-<div class="container">
 
-<header class="section-heading">
-	<a href="./store.html" class="btn float-right">See all</a>
+<header class="section-heading m-3">
+	<a href="{% url 'store' %}" class="btn float-right">See all</a>
 	<h3 class="section-title">Popular products</h3>
 </header><!-- sect-heading -->
 
 
-<div class="row">
+<div class="row m-2">
 	{% for product in products %}
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="card card-product-grid">
 			<a href="{{product.get_url}}" class="img-wrap"> <img src="{{product.image.url}}"> </a>
 			<figcaption class="info-wrap">
-				<a href="{{product.get_url}}" class="title">{{product.product_name}}</a>
-				<div class="price mt-1">&#x20B9; {{product.price}}</div> <!-- price-wrap.// -->
+				<h6><a href="{{product.get_url}}" class="title">{{product.product_name}}</a></h6>
+				<span >{{product.product_description}}</span><br>
+				<span class="price mt-1">&#x20B9; {{product.price}}</span> <!-- price-wrap.// -->
 			</figcaption>
 		</div>
 	</div> <!-- col.// -->
 {% endfor %}
 </div> <!-- row.// -->
 
-</div><!-- container // -->
 </section>
 <!-- ========================= SECTION  END// ========================= -->
 

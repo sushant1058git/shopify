@@ -45,8 +45,7 @@ def register(request):
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
-            # messages.success(request, 'Please activate your account by clicking '
-            #                           'on the link that we have sent to your email !! ')
+            messages.success(request, 'Please activate your account by clicking on the link that we have sent to your email !! ')
             return redirect('/accounts/login/?command=verification&email=' + email)
 
     else:
@@ -67,12 +66,12 @@ def login(request):
         if user is not None:
             try:
                 cart = Cart.objects.get(cart_id=_get_cart_id(request))
-                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists
+                is_cart_item_exists = CartItem.objects.filter(cart=cart).exists()
                 if is_cart_item_exists:
                     cart_item = CartItem.objects.filter(cart=cart)
-                for item in cart_item:
-                    item.user = user
-                    item.save()
+                    for item in cart_item:
+                        item.user = user
+                        item.save() 
 
             except:
                 pass
