@@ -53,7 +53,7 @@
 												{% for item in item.variation.all %}
 												<input type="hidden" name="{{ item.variation_category | lower}}" value="{{ item.variation_value | capfirst}}">
 												{% endfor %}
-												<button type = "submit" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-plus"></i> </button>
+												<button type = "submit" class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-minus"></i> </button>
 											</form>
 										</div>
 										<input type="text" class="form-control"  value="{{item.quantity}}">

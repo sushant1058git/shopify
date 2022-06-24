@@ -1,3 +1,4 @@
+from sqlite3 import paramstyle
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
@@ -9,10 +10,12 @@ from .forms import RegistrationForm
 from .models import Account
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, QueryDict
 from django.core.exceptions import ObjectDoesNotExist
 from cart.views import _get_cart_id
 from cart.models import Cart,CartItem
+import requests
+from django.views.decorators.csrf import csrf_exempt
 
 
 def register(request):
@@ -55,7 +58,7 @@ def register(request):
     }
     return render(request, 'accounts/register.html', context)
 
-
+@csrf_exempt
 def login(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -77,7 +80,20 @@ def login(request):
                 pass
             auth.login(request, user)
             messages.success(request, 'You are Logged in !!')
-            return redirect('dashboard')
+            # redirecting user to checkout page after login starts here
+            #install requests package
+            url=request.META.get('HTTP_REFERER')#It will grab previous url
+            try:
+                query=requests.utils.urlparse(url).query
+                print(query) #next=/cart/checkout/
+                params=dict(x.split('=') for x in query.split('&')) #-->{'next': '/cart/checkout/'} returned a dict with key 'next'
+                if 'next' in params:
+                    nextPage=params['next']
+                    return redirect(nextPage)
+            except:
+                return redirect('dashboard')
+
+            # redirecting user to checkout page after login ends here
         else:
             messages.error(request, 'Invalid Credentials !!')
             return redirect('login')

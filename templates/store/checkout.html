@@ -3,15 +3,14 @@
 {% block content %}
 {% load static %}
 
-<section class="section-content padding-y bg">
-<div class="container">
+<section class="section-content padding-y bg m-2">
 
 <!-- ============================ COMPONENT 1 ================================= -->
 		<div class="row">
 			<aside class="col-lg-6">
 		<div class="card">
         <div class="card-body">
-            <h4>Billing Address</h4><br>
+            <h4>Shipping Address</h4><br>
 			<form action="" method="POST">
 				{% csrf_token %}
 				<div class="form-row">
@@ -109,10 +108,10 @@
 					<table class="table table-borderless table-shopping-cart">
 		<thead class="text-muted mx-auto">
 		<tr class="small text-uppercase">
-		  <th scope="col">Product</th>
+		  <th scope="col" width="240">Product</th>
 		  <th scope="col" width="120">Quantity</th>
-		  <th scope="col" width="120">Price</th>
-		  <th scope="col" class="text-right" width="200"> </th>
+		  <th scope="col" width="240">Price</th>
+		  <!-- <th scope="col" class="text-right" width="200"> </th> -->
 		</tr>
 		</thead>
 		<tbody>
@@ -147,7 +146,7 @@
 		{% endfor %}
 		</tbody>
 		</table>
-					<button type="submit" name="submit" class="btn btn-primary btn-block">Checkout</button>
+					<button type="submit" name="submit" class="btn btn-primary btn-block">Place Order</button>
 					<a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
 					</form>
 				</div> <!-- card-body.// -->
@@ -160,7 +159,6 @@
 
 		<!-- ============================ COMPONENT 1 END .// ================================= -->
 
-</div> <!-- container .//  -->
 </section>
 		<!-- ========================= SECTION CONTENT END// ========================= -->
 
