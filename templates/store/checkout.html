@@ -11,7 +11,7 @@
 		<div class="card">
         <div class="card-body">
             <h4>Shipping Address</h4><br>
-			<form action="" method="POST">
+			<form action="{% url 'place_orders' %}" method="POST">
 				{% csrf_token %}
 				<div class="form-row">
 					<div class="col form-group">
@@ -30,7 +30,7 @@
 					</div>
 					<div class="col form-group">
 						<label for="">Phone Number</label>
-						<input required type="number" name="phone-number" class="form-control">
+						<input required type="number" name="phone" class="form-control">
 					</div>
 				</div>
 				<div class="form-row">
@@ -47,7 +47,7 @@
 					<div class="col form-group">
 						<label for="">State</label>
 <!--						<input type="text" name="state" class="form-control">-->
-							<select name="state" id="state" class="form-control">
+							<select name="state" id="state" class="form-control select2">
 									<option value="" selected disabled>Select State</option>
 									<option value="Andhra Pradesh">Andhra Pradesh</option>
 									<option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
@@ -89,12 +89,12 @@
 					</div>
 					<div class="col form-group">
 						<label for="">Pin Code</label>
-						<input required type="number" name="pin_code" class="form-control">
+						<input required type="number" name="pinCode" class="form-control">
 					</div>
 				</div>
 				<div>
 					<label>Order Note</label>
-					<textarea name="ordernote" rows="2" class="form-control"></textarea>
+					<textarea name="orderNote" rows="2" class="form-control"></textarea>
 				</div>
 
         </div>
@@ -146,9 +146,11 @@
 		{% endfor %}
 		</tbody>
 		</table>
-					<button type="submit" name="submit" class="btn btn-primary btn-block">Place Order</button>
-					<a href="{% url 'store' %}" class="btn btn-light btn-block">Continue Shopping</a>
-					</form>
+					<div class="row mx-auto">
+					<input type="submit" name="submit" class="btn btn-primary col-md-3" value="Continue">
+					<a href="{% url 'store' %}" class="btn btn-light col-md-3 ml-2">Continue Shopping</a>
+					</div>
+		</form>
 				</div> <!-- card-body.// -->
 				</div> <!-- card.// -->
 

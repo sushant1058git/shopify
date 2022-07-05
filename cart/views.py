@@ -187,6 +187,7 @@ def cart(request, total=0, quantity=0, cart_item=None):
             total += (item.product.price * item.quantity)
             quantity += item.quantity
         tax = (.02 * total)
+        taxes=round(tax,2)
         grand_total = total + tax
 
     except ObjectDoesNotExist:
@@ -197,7 +198,7 @@ def cart(request, total=0, quantity=0, cart_item=None):
         'cart_item': cart_item,
         'quantity': quantity,
         'grand_total': grand_total,
-        'tax': tax
+        'tax': taxes
 
     }
     return render(request, 'store/cart.html', context)
@@ -216,7 +217,9 @@ def checkout(request, total=0, quantity=0, cart_item=None):
             total += (item.product.price * item.quantity)
             quantity += item.quantity
         tax = (.02 * total)
+        taxes=round(tax,2)
         grand_total = total + tax
+    
 
     except ObjectDoesNotExist:
         pass
@@ -226,7 +229,7 @@ def checkout(request, total=0, quantity=0, cart_item=None):
         'cart_item': cart_item,
         'quantity': quantity,
         'grand_total': grand_total,
-        'tax': tax
+        'tax': taxes
 
     }
     return render(request, 'store/checkout.html', context)

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'store',
     'cart',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +56,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Shopify.urls'
+# to avoid popup block in paypal payment
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups' 
 
 TEMPLATES = [
     {
