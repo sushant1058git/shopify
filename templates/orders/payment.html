@@ -148,6 +148,7 @@ function getCookie(name) {
 
     var amount= "{{ grand_total }}"
     var url="{% url 'postpayment' %}"
+    var redirect_url="{% url 'payment_successful' %}"
     var csrftoken = getCookie('csrftoken');
     var orderID="{{order.order_number}}"
     var payment_method='PayPal'
@@ -194,15 +195,16 @@ function getCookie(name) {
                         status:details.status,
                     }),               
                 })
-                // .then(response => response.json())
-                // .then(data => console.log(data));
-
+                .then((response) => response.json())
+				  .then((data) => {
+						window.location.href = redirect_url + '?order_number='+data.order_number+'&payment_id='+data.transID;
+					});;
 
                 // Replace the above to show a success message within this page, e.g.
                 // const element = document.getElementById('paypal-button-container');
                 // element.innerHTML = '';
                 // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                // Or go to another URL:  actions.redirect('thank_you.html');
+                // actions.redirect('orders/payment_successful.html');
             }
             });
         }

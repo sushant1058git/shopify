@@ -3,7 +3,7 @@ from asyncio import FastChildWatcher
 import json
 from pyexpat.errors import messages
 from time import strftime
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.shortcuts import redirect, render
 from cart.models import *
 from .forms import *
@@ -87,6 +87,61 @@ def postpayment(request):
     order.payment=payment
     order.is_ordered=True
     order.save()
+    
+    #Move cart itemsss to order product table
+    cart_item=CartItem.objects.filter(user=request.user)
+    for item in cart_item:
+        orderedproduct=OrderProduct()
+        orderedproduct.order_id=order.id
+        orderedproduct.payment=payment
+        orderedproduct.user_id=request.user.id
+        orderedproduct.product_id=item.product_id
+        orderedproduct.quantity=item.quantity
+        orderedproduct.product_price=item.product.price
+        orderedproduct.ordered=True
+        orderedproduct.save()
+        cart_item=CartItem.objects.get(id=item.id)
+        product_variation=cart_item.variation.all()
+        orderedproduct=OrderProduct.objects.get(id=orderedproduct.id)
+        orderedproduct.variation.set(product_variation)
+        orderedproduct.save()
+        
+        #Reduce quantity of sold product from inventory
+        product=Product.objects.get(id=item.product_id)
+        product.stock -=item.quantity
+        product.save()
     #clear card once order is placed
-    return render(request,'orders/payment.html')
+    CartItem.objects.filter(user=request.user).delete()
+    
+    # Send order number and transaction id back to sendData method via JsonResponse
+    data = {
+        'order_number': order.order_number,
+        'transID': payment.paymentId,
+    }
+    return JsonResponse(data)
             
+def payment_successful(request):
+    order_number = request.GET.get('order_number')
+    transID = request.GET.get('payment_id')
+
+    try:
+        order = Order.objects.get(order_number=order_number, is_ordered=True)
+        ordered_products = OrderProduct.objects.filter(order_id=order.id)
+
+        subtotal = 0
+        for i in ordered_products:
+            subtotal += i.product_price * i.quantity
+
+        payment = Payment.objects.get(paymentId=transID)
+
+        context = {
+            'order': order,
+            'ordered_products': ordered_products,
+            'order_number': order.order_number,
+            'transID': payment.paymentId,
+            'payment': payment,
+            'subtotal': subtotal,
+        }
+        return render(request, 'orders/payment_successful.html', context)
+    except (Payment.DoesNotExist, Order.DoesNotExist):
+        return redirect('home')
