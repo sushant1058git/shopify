@@ -145,3 +145,4 @@ def payment_successful(request):
         return render(request, 'orders/payment_successful.html', context)
     except (Payment.DoesNotExist, Order.DoesNotExist):
         return redirect('home')
+    

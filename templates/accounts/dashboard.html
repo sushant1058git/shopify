@@ -25,73 +25,46 @@
 		<a class="btn btn-light btn-block" href="{% url 'logout' %}"> <i class="fa fa-power-off"></i> <span class="text">Log out</span> </a>
 		<!--   SIDEBAR .//END   -->
 	</aside>
-	<main class="col-md-9">
+	
+	<main class="col-md-9 mb-3 mt-3">
+		{% for order in orders %}
+
 		<article class="card">
 		<header class="card-header">
-			<strong class="d-inline-block mr-3">Order ID: 6123456789</strong>
-			<span>Order Date: 16 December 2018</span>
+			<strong class="d-inline-block mr-3">Order ID: {{order.order.order_number}}</strong>
+			<span>Order Date: {{order.payment.orderPlacedOn}}</span>
+			<span class="b mx-4">Total:  ${{order.order.orderTotal}} </span>
 		</header>
 		<div class="card-body">
 			<div class="row">
 				<div class="col-md-8">
 					<h6 class="text-muted">Delivery to</h6>
-					<p>Michael Jackson <br>
-					Phone +1234567890 Email: myname@pixsellz.com <br>
-			    	Location: Home number, Building name, Street 123,  Tashkent, UZB <br>
-			    	P.O. Box: 100123
-			 		</p>
-				</div>
-				<div class="col-md-4">
-					<h6 class="text-muted">Payment</h6>
-					<span class="text-success">
-						<i class="fab fa-lg fa-cc-visa"></i>
-					    Visa  **** 4216
-					</span>
-					<p>Subtotal: $356 <br>
-					 Shipping fee:  $56 <br>
-					 <span class="b">Total:  $456 </span>
-					</p>
+					<h6>{{order.order.fullName}}</h6>
+					Phone {{order.order.phone}} Email: {{order.order.email}}<br>
+			    	Location: {{order.order.address}}
 				</div>
 			</div> <!-- row.// -->
 		</div> <!-- card-body .// -->
+		
 		<div class="table-responsive">
 		<table class="table table-hover">
 			<tr>
-				<td width="65">
-					<img src="../images/items/1.jpg" class="img-xs border">
+				<td width="200">
+					<a href=""><img src="{{order.product.image.url}}"  class="img-md border"></a>
 				</td>
 				<td>
-					<p class="title mb-0">Product name goes here </p>
-					<var class="price text-muted">USD 145</var>
+					<p class="title mb-0"><strong>{{ order.product.product_name}}</strong></p>
+					<var class="price text-muted">USD {{order.product.price}}</var>
 				</td>
-				<td> Seller <br> Nike clothing </td>
-				<td width="250"> <a href="#" class="btn btn-outline-primary">Track order</a> <a href="#" class="btn btn-light"> Details </a> </td>
-			</tr>
-			<tr>
-				<td>
-					<img src="../images/items/2.jpg" class="img-xs border">
+				<td> Quantity <br x> {{ order.quantity}} </td>
+				<td width="400"> <a href="#" class="btn btn-outline-primary">Track order</a> <a href="#" class="btn btn-light"> Details </a>
+					<a href="{% url 'reviewproducts' order.product_id %}" class="btn btn-light"> Write review </a> </td>
 				</td>
-				<td>
-					<p class="title mb-0">Another name goes here </p>
-					<var class="price text-muted">USD 15</var>
-				</td>
-				<td> Seller <br> ABC shop </td>
-				<td> <a href="#" class="btn btn-outline-primary">Track order</a> <a href="#" class="btn btn-light"> Details </a> </td>
-			</tr>
-			<tr>
-				<td>
-					<img src="../images/items/3.jpg" class="img-xs border">
-				</td>
-				<td>
-					<p class="title mb-0">The name of the product  goes here </p>
-					<var class="price text-muted">USD 145</var>
-				</td>
-				<td> Seller <br> Wallmart </td>
-				<td> <a href="#" class="btn btn-outline-primary">Track order</a> <a href="#" class="btn btn-light"> Details </a> </td>
 			</tr>
 		</table>
 		</div> <!-- table-responsive .end// -->
 		</article> <!-- order-group.// -->
+		{% endfor %}
 	</main>
 </div> <!-- row.// -->
 </div>

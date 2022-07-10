@@ -49,7 +49,7 @@ class Order(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return str(self.user)
+        return str(self.order_number)
     
     def fullName(self):
         return f'{self.first_name} {self.last_name}'
@@ -59,7 +59,7 @@ class OrderProduct(models.Model):
     order=models.ForeignKey(Order,on_delete=models.CASCADE)
     payment=models.ForeignKey(Payment,on_delete=models.SET_NULL,blank=True,null=True)
     user=models.ForeignKey(Account,on_delete=models.SET_NULL,null=True)
-    product=models.ForeignKey(Product,on_delete=models.CASCADE)
+    product=models.ForeignKey(Product,on_delete=models.CASCADE,null=True)
     variation=models.ManyToManyField(Variation,null=True,blank=True)
     quantity=models.IntegerField()
     product_price=models.FloatField()

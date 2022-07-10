@@ -16,6 +16,26 @@ from cart.views import _get_cart_id
 from cart.models import Cart,CartItem
 import requests
 from django.views.decorators.csrf import csrf_exempt
+from orders.models import OrderProduct,Order
+
+@login_required(login_url='login')
+def dashboard(request):
+    context={}
+    # import pdb;pdb.set_trace()
+    orders = OrderProduct.objects.filter(user=request.user, ordered=True)[::-1]
+    
+    # order_number_list=[]
+    # for i in orders:
+    #     order_number_list.append(i.order.order_number)
+    # first=order_number_list[0]
+    # ordId=Order.objects.get(order_number=first).id
+    
+    # product=OrderProduct.objects.filter(order_id=ordId)
+    # for i in product:
+    #     print(i.product.product_name)
+    
+    context['orders']=orders
+    return render(request,'accounts/dashboard.html',context)
 
 
 def register(request):
@@ -125,11 +145,6 @@ def activate(request, uidb64, token):
         return redirect(register)
 
 
-@login_required(login_url='login')
-def dashboard(request):
-    return render(request, 'accounts/dashboard.html')
-
-
 def forgotPassword(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -185,3 +200,4 @@ def resetPassword(request):
             return redirect(login)
     else:
        return render(request, 'accounts/resetPassword.html')
+
