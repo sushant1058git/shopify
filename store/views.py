@@ -1,7 +1,7 @@
 from email import message
 from math import prod
 from django.shortcuts import redirect, render,get_object_or_404
-from .models import Product, ReviewRating
+from .models import Product, ProductGallery, ReviewRating
 from category.models import Category
 from cart.models import Cart,CartItem
 from cart.views import _get_cart_id
@@ -50,6 +50,8 @@ def product_details(request, category_slug, product_slug):
         
         #Get all review for given product
         list_of_all_review=ReviewRating.objects.filter(product_id=single_product.id,status=True)
+        #Get Product Gallery
+        gallery=ProductGallery.objects.filter(product=single_product.id)
 
     except Exception as e:
         raise e
@@ -57,7 +59,8 @@ def product_details(request, category_slug, product_slug):
         'single_product':single_product,
         'is_in_cart': is_in_cart,
         # 'colour':colour,
-        'list_of_all_review':list_of_all_review
+        'list_of_all_review':list_of_all_review,
+        'gallery':gallery
     }
     return render(request, 'store/product_details.html', context)
 

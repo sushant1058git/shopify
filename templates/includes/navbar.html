@@ -4,7 +4,7 @@
 <div class="row align-items-center">
 	<div class="col-lg-2 col-md-3 col-6">
 		<a href="/" class="brand-wrap">
-			<img class="logo ml-3" src="{% static './images/logo.png' %}">
+			<img class="logo ml-3" src="{% static './images/Vogue.png' %}">
 		</a> <!-- brand-wrap.// -->
 	</div>
 	<div class="col-lg col-sm col-md col-6 flex-grow-0">
@@ -46,7 +46,7 @@
 						{% else %}
 						<small class="title text-muted">Welcome {{user.first_name}}!</small>
 						<div>
-							<a href="{% url 'dashboard' %}">Dashboard</a> <span class="dark-transp"> | </span>
+							<a href="{% url 'account' %}">Account</a> <span class="dark-transp"> | </span>
 							<a href="{% url 'logout' %}"> Logout</a>
 						</div>
 						{% endif %}

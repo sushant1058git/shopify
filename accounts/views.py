@@ -1,16 +1,15 @@
-from sqlite3 import paramstyle
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from .forms import RegistrationForm
+from .forms import RegistrationForm,UserProfile,UserForm,UserProfileForm
 from .models import Account
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, QueryDict
+from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from cart.views import _get_cart_id
 from cart.models import Cart,CartItem
@@ -37,6 +36,40 @@ def dashboard(request):
     context['orders']=orders
     return render(request,'accounts/dashboard.html',context)
 
+@login_required(login_url='login')
+def account(request):
+    print(request.path)
+    orders=Order.objects.filter(user=request.user,is_ordered=True).order_by('-created_at')
+    profile=UserProfile.objects.get(user=request.user)
+    context={
+        'orders_count':orders.count(),
+        'user':request.user,
+        'profile':profile
+    }
+    return render(request,'accounts/account.html',context)
+
+
+@login_required(login_url='login')
+def edit_profile(request):
+    userprofile = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile has been updated.')
+            return redirect('edit_profile')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=userprofile)
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+        'userprofile': userprofile,
+    }
+    return render(request, 'accounts/edit_profile.html', context)
+
 
 def register(request):
     if request.method == 'POST':
@@ -53,6 +86,13 @@ def register(request):
                                                username=username, password=password)
             user.phone_number = phone_number
             user.save()
+            
+            
+            #Creating user profile
+            profile=UserProfile()
+            profile.user_id=user.id
+            profile.profile_picture='default/default_pic.png'
+            profile.save()
 
             # User Activaton
 
@@ -111,7 +151,7 @@ def login(request):
                     nextPage=params['next']
                     return redirect(nextPage)
             except:
-                return redirect('dashboard')
+                return redirect('store')
 
             # redirecting user to checkout page after login ends here
         else:

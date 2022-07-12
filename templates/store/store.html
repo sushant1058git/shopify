@@ -150,7 +150,6 @@
 			<figcaption class="info-wrap">
 				<div class="fix-height">
 					<h6><a href="{{product.get_url}}" class="title">{{product.product_name}}</a></h6>
-					{% if product.countReview > 0 %}
 							<div class="rating-star mt-1 mb-2">
 								<span>
 									<i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
@@ -161,7 +160,6 @@
 									<a href="{{product.get_url}}" class="mx-1"><span>{{product.countReview}}</span></a>
 									</span>
 							</div>
-					{% endif %}
 					<span class="mt-2">{{product.product_description}}</span>
 					<div class="price-wrap mt-2">
 						<span class="price">&#x20B9; {{product.price}}</span>
