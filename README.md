@@ -1,2 +1,2 @@
 # shopify
-Production level Django ecommerce website named 'GreatKart' with features like payment integration, authenticaton etc
+Production level Django ecommerce website named 'vogue' with features like payment integration, authenticaton etc
