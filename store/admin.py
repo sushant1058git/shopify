@@ -1,9 +1,9 @@
 from django.contrib import admin
 from .models import Product, ProductGallery,Variation,ReviewRating
-import admin_thumbnails
+# import admin_thumbnails
 # Register your models here.
 
-@admin_thumbnails.thumbnail('image')
+# @admin_thumbnails.thumbnail('image')
 
 class ProductGalleryInline(admin.TabularInline):
     model=ProductGallery
