@@ -18,5 +18,8 @@ Please adhere to this project's `code of conduct`.
 
 ## Screenshots
 
-![App Screenshot](media/readme_screenshots/abc1.png)
+<img src='abc1'>
+<img src='abc2'>
+<img src='abc3'>
+<img src='abc4'>
 
