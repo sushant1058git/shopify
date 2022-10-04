@@ -19,7 +19,7 @@ Please adhere to this project's `code of conduct`.
 ## Screenshots
 
 <img src='abc1.png'>
-<img src='abc2'>
-<img src='abc3'>
-<img src='abc4'>
+<img src='abc2.png'>
+<img src='abc3.png'>
+<img src='abc4.png'>
 
