@@ -18,7 +18,7 @@ Please adhere to this project's `code of conduct`.
 
 ## Screenshots
 
-<img src='media/readme_screeshots/abc1'>
+<img src='media/readme_screenshots/abc1'>
 <img src='abc2'>
 <img src='abc3'>
 <img src='abc4'>
