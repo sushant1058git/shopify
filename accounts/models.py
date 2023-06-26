@@ -42,7 +42,7 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    username = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=50)
     email = models.EmailField(max_length=100, unique=True)
     phone_number = models.CharField(max_length=50)
 
@@ -68,10 +68,10 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, add_label):
         return True
-    
+
     def fullName(self):
         return f'{self.first_name} {self.last_name}'
-    
+
 class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
     address_line_1 = models.CharField(blank=True, max_length=100)
